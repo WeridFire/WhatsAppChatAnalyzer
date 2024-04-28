@@ -76,7 +76,6 @@ for line in lines:
         chat_counter['domains'].extend(chatline.domains)
 
 
-
 """
 REDUCE AND ORDER DATA
 """
