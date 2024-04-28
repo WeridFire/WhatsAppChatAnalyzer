@@ -23,6 +23,13 @@ except FileNotFoundError:
     print(stopfile + " not found")
     stop_words = []
 
+specialwords = "specialwords.txt"
+try:
+    special = open(specialwords, "r", encoding='utf-8')
+    special_words = [x.strip() for x in special.readlines()]
+except FileNotFoundError:
+    print(specialwords + " not found")
+    special_words = []
 
 """
 DICT SETUP
@@ -196,6 +203,27 @@ if messages_percent:
     plt.title('Messages Percentage')
     plt.pie(percentages, labels=names, autopct='%1.1f%%', startangle=140)
     plt.axis('equal')
+    plt.tight_layout()
+    plt.show()
+
+
+# Special words hist
+special_words_hist = True
+if special_words_hist and len(special_words) != 0:
+    values = []
+    for word in special_words:
+        added = False
+        for el in chat_counter['words']:
+            if el[0] == word:
+                added = True
+                values.append(el[1])
+        if added is False:
+            values.append(0)
+
+    plt.bar(special_words, values, color='skyblue', width=0.6)
+    plt.xlabel('Words')
+    plt.ylabel('Repetitions')
+    plt.title('Special words repetitions')
     plt.tight_layout()
     plt.show()
 
