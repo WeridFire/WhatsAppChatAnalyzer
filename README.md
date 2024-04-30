@@ -2,7 +2,7 @@
 
 This script allows you to analyze your WhatsApp chat messages and visualize various statistics using Python. 
 
-Here are some examples of the graphs created:
+Here are some examples of the graphs that are created:
 
 ![hist_mess_per_day](https://github.com/WeridFire/WhatsAppChatAnalyzer/assets/69721649/608f3fe4-d15f-4612-94c2-b19eab417683)
 
@@ -27,3 +27,18 @@ You can install the required packages using pip:
 
 ```bash
 pip install matplotlib
+```
+
+## Analyze your first chat
+
+### Base Configuration
+
+1. Clone this Repository.
+2. Export the relevant chat from WhatsApp and rename it "chat.txt".
+3. Replace the "chat.txt" file with your newly exported chat.
+
+### Personalize your Data
+
+- "stopwords.txt": write here the words you DON'T want to count in the graphs.
+
+- "specialwords.txt": including words here will create a special hist about them. Too many words here can lead to worst results.
