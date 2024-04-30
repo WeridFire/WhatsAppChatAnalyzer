@@ -35,7 +35,7 @@ pip install matplotlib
 
 1. Clone this Repository.
 2. Export the relevant chat from WhatsApp and rename it "chat.txt".
-3. Replace the "chat.txt" file with your newly exported chat.
+3. Place the "chat.txt" file in the cloned folder.
 
 ### Personalize your Data
 
