@@ -3,7 +3,6 @@ from collections import Counter
 from Line import *
 import matplotlib.pyplot as plt
 
-
 """
 OPENING FILES
 """
@@ -82,10 +81,11 @@ for line in lines:
     if len(chatline.domains) > 0:
         chat_counter['domains'].extend(chatline.domains)
 
-
 """
 REDUCE AND ORDER DATA
 """
+
+
 def reduce_and_sort(data):
     return sorted(
         dict(
@@ -98,21 +98,24 @@ def reduce_and_sort(data):
         reverse=True
     )
 
+
 def reduce_and_filter_words(list_of_words):
     val = [w.lower() for w in list_of_words if
            (len(w) > 1) and (w.isalnum()) and (not w.isnumeric()) and (w.lower() not in stop_words)]
     return val
 
+
 def filter_single_word(w):
     return (len(w) > 1) and (w.isalnum()) and (not w.isnumeric()) and (w.lower() not in stop_words)
+
 
 def reduce_fav_item(data):
     exist = []
     arr = []
-    for i in data:
-        if i[1] > 0 and not i[0][0] in exist:
-            exist.append(i[0][0])
-            arr.append(i)
+    for d in data:
+        if d[1] > 0 and not d[0][0] in exist:
+            exist.append(d[0][0])
+            arr.append(d)
     return arr
 
 
@@ -122,17 +125,18 @@ chat_counter['domains'] = reduce_and_sort(chat_counter['domains'])
 chat_counter['emojis'] = reduce_and_sort(chat_counter['emojis'])
 chat_counter['timestamps'] = reduce_and_sort([(x.strftime('%A'), x.strftime('%H')) for x in chat_counter['timestamps']])
 chat_counter['fav_emoji'] = reduce_fav_item(reduce_and_sort(chat_counter['fav_emoji']))
-chat_counter['fav_word'] = reduce_fav_item(reduce_and_sort([x for x in chat_counter['fav_word'] if filter_single_word(x[1])]))
-
-
+chat_counter['fav_word'] = reduce_fav_item(
+    reduce_and_sort([x for x in chat_counter['fav_word'] if filter_single_word(x[1])]))
 
 """
 VISUALIZE
 """
 
+ALL = True
+
 # Hist "Messages per Day of the week"
 messages_per_day_of_the_week = True
-if messages_per_day_of_the_week:
+if messages_per_day_of_the_week and ALL:
     per_day_mess = {'Monday': 0, 'Tuesday': 0, 'Wednesday': 0, 'Thursday': 0, 'Friday': 0, 'Saturday': 0, 'Sunday': 0}
     for day_hour, n in chat_counter['timestamps']:
         giorno, _ = day_hour
@@ -151,12 +155,10 @@ if messages_per_day_of_the_week:
     plt.tight_layout()
     plt.show()
 
-
-
 # Hist "Top emojis"
 top_emojis = True
-show = 5 # show top x emoji
-if top_emojis:
+show = 5  # show top x emoji
+if top_emojis and ALL:
     emojis = []
     nums = []
     flag = 0
@@ -176,11 +178,10 @@ if top_emojis:
     plt.tight_layout()
     plt.show()
 
-
 # Hist top words
 top_words = True
 show = 5
-if top_words:
+if top_words and ALL:
     words = [chat_counter['words'][k][0] for k in range(show)]
     values = [chat_counter['words'][k][1] for k in range(show)]
 
@@ -191,14 +192,13 @@ if top_words:
     plt.tight_layout()
     plt.show()
 
-
 # Pie Messages
 messages_percent = True
-if messages_percent:
-    names = [x for x,y in chat_counter['senders']]
-    messages = [y for x,y in chat_counter['senders']]
+if messages_percent and ALL:
+    names = [x for x, y in chat_counter['senders']]
+    messages = [y for x, y in chat_counter['senders']]
     s = sum(messages)
-    percentages = [(x/s)*100 for x in messages]
+    percentages = [(x / s) * 100 for x in messages]
 
     plt.title('Messages Percentage')
     plt.pie(percentages, labels=names, autopct='%1.1f%%', startangle=140)
@@ -206,10 +206,9 @@ if messages_percent:
     plt.tight_layout()
     plt.show()
 
-
 # Special words hist
 special_words_hist = True
-if special_words_hist and len(special_words) != 0:
+if special_words_hist and len(special_words) != 0 and ALL:
     values = []
     for word in special_words:
         added = False
@@ -228,7 +227,4 @@ if special_words_hist and len(special_words) != 0:
     plt.show()
 
 
-
-
-
-
+print(chat_counter['fav_emoji'], chat_counter['fav_word'])
